@@ -42,7 +42,7 @@ Similar to the booking patterns, the price greatly decreased from October to Jan
 
 In order to study the daily price changes, I calculated the percentage difference between the mean price per day of the week and the total median price. After removing the outliers, the plot below shows a slight (1%) increase during the peak times. 
 
-![Price by Day of Week](images/DOW-price.png)
+![Price by Day of Week](images/Dow-price.png)
 
 When looking at individual listings, most increased in price over the weekend. But the low overall increase suggests that a majority of listings have a constant price regardless of the day of the.
 
