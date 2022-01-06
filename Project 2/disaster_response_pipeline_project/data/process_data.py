@@ -1,16 +1,28 @@
 import sys
-
+import pandas as pd 
+from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    messages = pd.read_csv('messages.csv', sep = ',', index_col = 'id')
+    categories = pd.read_csv('categories.csv', sep = ',', index_col = 'id')
+    df = messages.join(categories)
+    return df
 
 
 def clean_data(df):
-    pass
+    categories = df['categories'].str.split(';',expand = True)
+    category_colnames = categories.iloc[0].apply(lambda x: x.split('-')[0])
+    categories.columns = category_colnames
+    categories = categories.applymap(lambda x:x.split('-')[1])
+    del df['categories']
+    df = df.join(categories)
+    df = df[~df.duplicated()]
+    return df
 
 
 def save_data(df, database_filename):
-    pass  
+    engine = create_engine('sqlite:///{}.db'.format(database_filename))
+    df.to_sql('disaster_tweets', engine, index=False)  
 
 
 def main():
