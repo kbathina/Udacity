@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+import numpy as np
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -74,28 +75,50 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
+    label_counts = df.drop(['message','original','genre', 'VADER'], axis=1).sum(axis = 1).value_counts()
+    label_names = list(label_counts.index)
+
+    bins = np.linspace(-1,1,21)
+    sentiment = df['VADER'].groupby(pd.cut(df['VADER'], bins=bins)).size()
+    sentiment.index = sentiment.index.map(str)
+    sentiment_x = sentiment.index
+    sentiment_y = sentiment.values
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    x=label_names,
+                    y=label_counts
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Number of Labels per Tweet',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "# of Labels"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=sentiment_x,
+                    y=sentiment_y
+                )
+            ],
+
+            'layout': {
+                'title': 'VADER Sentiment',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Sentiment"
                 }
             }
         }

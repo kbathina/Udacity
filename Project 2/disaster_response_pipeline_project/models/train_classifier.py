@@ -40,8 +40,9 @@ def load_data(database_filepath):
     df = pd.read_sql_table('disaster_tweets', con = engine)
 
     X = df['message'].values
-    columns = df[df.columns[3:]].columns
-    Y = df[df.columns[3:]].values
+    to_drop = ['message','original','genre', 'VADER']
+    columns = df.drop(to_drop, axis=1).columns
+    Y = df.drop(to_drop, axis=1).values
 
     return X,Y, columns
 

@@ -1,6 +1,10 @@
 import sys
 import pandas as pd 
 from sqlalchemy import create_engine
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import nltk
+nltk.download('vader_lexicon')
+sid = SentimentIntensityAnalyzer()
 
 def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath, sep = ',', index_col = 'id')
@@ -17,6 +21,7 @@ def clean_data(df):
     del df['categories']
     df = df.join(categories)
     df = df[~df.duplicated()]
+    df['VADER'] = df['message'].apply(lambda x: sid.polarity_scores(x)['compound'])
     return df
 
 
