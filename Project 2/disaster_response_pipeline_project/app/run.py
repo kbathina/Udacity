@@ -4,15 +4,50 @@ import pandas as pd
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-
+import nltk
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
+from sklearn.base import BaseEstimator, TransformerMixin
+from nltk.tag import pos_tag
+from collections import Counter
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+pos_tags = ['CC','CD','DT','EX','FW','IN','JJ','JJR',
+ 'JJS','LS','MD','NN','NNP','NNPS','NNS',
+ 'PDT','POS','PRP','PRP$','RB','RBR','RBS',
+ 'RP','SYM','TO','UH','VB','VBD','VBG','VBN',
+ 'VBP','VBZ','WDT','WP','WP$','WRB']
+from nltk import TweetTokenizer
 
 
 app = Flask(__name__)
+
+class POS_Counter(BaseEstimator, TransformerMixin):
+
+    def pos_dict_maker(self):
+        pos_dict = {}
+        for pos in pos_tags:
+            pos_dict[pos] = 0
+        return pos_dict
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        X_tagged = []
+        for text in X:
+            pos_dict = self.pos_dict_maker()
+            counts = Counter([pos for word,pos in pos_tag(word_tokenize(text))])            
+            for k,v in counts.items():
+                if k.isalnum():
+                    pos_dict[k] = v
+                    
+            X_tagged.append(pos_dict)
+
+        return pd.DataFrame(X_tagged).fillna(0)
 
 def tokenize(text):
     tokens = word_tokenize(text)
@@ -26,11 +61,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/{}'.format('DisasterResponse.db'))
+df = pd.read_sql_table('disaster_tweets', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
