@@ -1,23 +1,60 @@
-import sys
+from sqlalchemy import create_engine
+import pandas as pd
+import re
+import numpy as np
+import pickle
 
+import nltk
+from nltk import TweetTokenizer
+nltk.download('stopwords')
+nltk.download('wordnet')
+from nltk.corpus import stopwords
+stopwords = stopwords.words('english')
+from nltk.stem import WordNetLemmatizer
+
+from sklearn.pipeline import Pipeline,FeatureUnion
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import StandardScaler
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split,GridSearchCV
+from sklearn.metrics import classification_report
+tt = TweetTokenizer(preserve_case = False, strip_handles = True)
+lemmatizer = WordNetLemmatizer()
 
 def load_data(database_filepath):
-    pass
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
+    df = pd.read_sql_table('disaster_tweets', con = engine)
 
+    X = df['message'].values
+    Y = df[df.columns[3:]].values
+
+    return X,Y
 
 def tokenize(text):
-    pass
+    text = tt.tokenize(text)
+    text = [word for word in text if word not in stopwords]
+    text = [punc_stripper(word) for word in text]
+    text = [word for word in text if word]
+    text = [lemmatizer.lemmatize(word) for word in text]
+    
+    return text
 
 
 def build_model():
-    pass
+    pipeline = Pipeline([
+        ('count',CountVectorizer(tokenizer=tokenize)),
+        ('clf',MultiOutputClassifier(MultinomialNB()))
+    ])
+    return pipeline
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
+    return model.transform(X_test,Y_test, category_names)
 
 
 def save_model(model, model_filepath):
+    pickle.dump(model, open(model_filepath, 'wb'))
     pass
 
 

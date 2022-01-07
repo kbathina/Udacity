@@ -13,7 +13,7 @@ def clean_data(df):
     categories = df['categories'].str.split(';',expand = True)
     category_colnames = categories.iloc[0].apply(lambda x: x.split('-')[0])
     categories.columns = category_colnames
-    categories = categories.applymap(lambda x:x.split('-')[1])
+    categories = categories.applymap(lambda x:int(x.split('-')[1])).replace(2,0)
     del df['categories']
     df = df.join(categories)
     df = df[~df.duplicated()]
