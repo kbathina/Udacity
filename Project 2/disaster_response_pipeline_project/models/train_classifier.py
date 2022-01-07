@@ -4,6 +4,7 @@ import re
 import numpy as np
 import pickle
 
+import sys
 import nltk
 from nltk import TweetTokenizer
 nltk.download('stopwords')
@@ -14,11 +15,10 @@ from nltk.stem import WordNetLemmatizer
 
 from sklearn.pipeline import Pipeline,FeatureUnion
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import StandardScaler
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.model_selection import train_test_split,GridSearchCV
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
+from sklearn.naive_bayes import MultinomialNB 
 tt = TweetTokenizer(preserve_case = False, strip_handles = True)
 lemmatizer = WordNetLemmatizer()
 
@@ -27,9 +27,16 @@ def load_data(database_filepath):
     df = pd.read_sql_table('disaster_tweets', con = engine)
 
     X = df['message'].values
+    columns = df[df.columns[3:]].columns
     Y = df[df.columns[3:]].values
 
-    return X,Y
+    return X,Y, columns
+
+def punc_stripper(word):
+    if len(word) > 1: 
+        return word
+    if len(word) == 1 and word.isalnum():
+        return word
 
 def tokenize(text):
     text = tt.tokenize(text)
@@ -44,13 +51,14 @@ def tokenize(text):
 def build_model():
     pipeline = Pipeline([
         ('count',CountVectorizer(tokenizer=tokenize)),
-        ('clf',MultiOutputClassifier(MultinomialNB()))
+        ('clf', MultiOutputClassifier(MultinomialNB()))
     ])
     return pipeline
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    return model.transform(X_test,Y_test, category_names)
+    y_pred = model.predict(X_test)
+    return classification_report(Y_test,y_pred,target_names = category_names)
 
 
 def save_model(model, model_filepath):

@@ -3,8 +3,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    messages = pd.read_csv('messages.csv', sep = ',', index_col = 'id')
-    categories = pd.read_csv('categories.csv', sep = ',', index_col = 'id')
+    messages = pd.read_csv(messages_filepath, sep = ',', index_col = 'id')
+    categories = pd.read_csv(categories_filepath, sep = ',', index_col = 'id')
     df = messages.join(categories)
     return df
 
@@ -21,7 +21,7 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    engine = create_engine('sqlite:///{}.db'.format(database_filename))
+    engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('disaster_tweets', engine, index=False)  
 
 
