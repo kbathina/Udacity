@@ -2,18 +2,12 @@ import json
 import plotly
 import pandas as pd
 import numpy as np
+from collections import Counter
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 import nltk
-from flask import Flask
-from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
-from sklearn.externals import joblib
-from sqlalchemy import create_engine
-from sklearn.base import BaseEstimator, TransformerMixin
 from nltk.tag import pos_tag
-from collections import Counter
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 pos_tags = ['CC','CD','DT','EX','FW','IN','JJ','JJR',
@@ -23,6 +17,12 @@ pos_tags = ['CC','CD','DT','EX','FW','IN','JJ','JJR',
  'VBP','VBZ','WDT','WP','WP$','WRB']
 from nltk import TweetTokenizer
 
+from flask import Flask
+from flask import render_template, request, jsonify
+from plotly.graph_objs import Bar
+from sklearn.externals import joblib
+from sklearn.base import BaseEstimator, TransformerMixin
+from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
