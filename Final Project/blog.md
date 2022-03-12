@@ -6,9 +6,9 @@ Music is typically classified into genres, such as pop, rock, or rap but definin
 
 Because of the difficulty of human classification, I look into using machine learning to identify patterns in genres using various measurements from songs.
 
-## Music Data
+## Data
 
-I downloaded a music dataset from (Kaggle)[https://www.kaggle.com/purumalgi/music-genre-classification]. This data includes songs that are categorized into 1 of 11 genres. Each song has the metadata provided as well as musical features. 
+I downloaded a music dataset from (Kaggle)[https://www.kaggle.com/purumalgi/music-genre-classification]. This data includes 17,997 songs that are categorized into 1 of 11 genres. Each song has the metadata provided as well as musical features. 
 
 ### Genres
 
@@ -32,13 +32,13 @@ There is a large class imbalance that will have to be accounted for when buildin
 
 ### Musical Features
 
-There are 15 features in the dataset. A description from [Spotify](https://developer.spotify.com/discover/) of each feature is described below.
+There are 15 features in the dataset. A description from [Spotify](https://developer.spotify.com/discover/) of each feature is described below. 
 
 
 | Feature      | Description | Feature      | Description |
 | ----------- | ----------- | ----------- | ----------- |
 | Artist Name      |  name of the artist| Track Name|name of the song|
-| Popularity      | how popular the song is|how well a song is suited for dancingDanceability||
+| Popularity      | how popular the song is|Danceability| how well a song is suited for dancing|
 | Energy      |a measure of intensity and activity in the song|Key|the musical key the song is in|
 | Loudness      | the average decibels of the song|Speechiness|the presence of spoken word in the song|
 | Acousticness      | how acoustic the song is|Instrumentalness|how much of the song consists of instrumentals|
@@ -46,7 +46,37 @@ There are 15 features in the dataset. A description from [Spotify](https://devel
 | Tempo |the speed of the song| Duration_in min/ms|the length of the song|
 | Time_signature|the time signature of the song based on quarter notes | | |
 
+In order to have consistent data types, I limit features to those that are continuous Basic statistics of the remaining features are shown below. 
+
+|| Popularity      | Danceability | Energy      | Loudness | Speechiness      | Acousticeness | Instrumentalness      | Liveness | Valence      | Tempo | Duration_in min/ms      |
+| ----------- | ----------- | ----------- | ----------- |----------- | ----------- | ----------- | ----------- |----------- | ----------- | ----------- | ----------- |
+minimum	|1.000000	|0.059600	|0.000020	|-39.95200	|0.022500	|0.000000	|0.000001	|0.01190	|0.018300	|30.557000	|5.016500e-01
+mean	|44.512124	|0.543433	|0.662777	|-7.91066	|0.079707	|0.247082	|0.177562	|0.19617	|0.486208	|122.623294	|2.007445e+05
+median	|44.000000	|0.545000	|0.700000	|-7.01600	|0.047400	|0.081400	|0.003910	|0.12900	|0.481000	|120.065500	|2.091600e+05
+maximum	|100.000000	|0.989000	|1.000000	|1.35500	|0.955000	|0.996000	|0.996000	|1.00000	|0.986000	|217.416000	|1.477187e+06
+
+### Fixing the Time Feature
+
+The distribution of many of the features make sense except for Duration_in min/ms.
+
+<img src="images/time.png" width="400" height="300" />
+
+This bimodel distribution explains the strange feature name; Some of the songs are in milliseconds and some are in minutes. To fix this, I split the distribution in half and convert all times to minutes. 
+
+### Missing Data
+
+3 Features contain missing features. 
+* Popularity: 428
+* Key: 2014
+* Instrumentalness: 4377
+
+Removing rows with missing data reduces the data size to 65% of the original size.
+
+## Exploratory Data Analysis
+
+<img src="images/Feature Distribution Across Genre.png"/>
 
 ## Classification
+
 
 ### Results
