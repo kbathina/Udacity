@@ -74,9 +74,32 @@ Removing rows with missing data reduces the data size to 65% of the original siz
 
 ## Exploratory Data Analysis
 
-<img src="images/Feature Distribution Across Genre.png"/>
+When looking at the distribution of features, some interesting patterns emerge. Distributions are shown in the Appendix.
+
+1. Expectedly, pop music has the most popular songs. What is surprising is that, on average, country music is more popular.
+2. Hip Hop and Pop are the most danceable music. I would expect Bollywood music to be ranked higher; this could be due to its lack of western popularity.
+3. Metal has the most energy and is the most loud genre.
+4. Hip Hop is the most speech based genre while instrumental contains the most instrumentalness and is the most acoustic.
+5. There is no significant pattern with tempo and genre.
+6. Bollywood music tends to be the longest. I am surprised that instrumental music is not higher ranked; this could be due to an underrepresentation of classical music.
 
 ## Classification
 
+My strategy to build a good classifier was to try many different algorithms and parameters. Because of the small amount of data and features, this is a reasonable approach.
+
+### Models
+
+I consider the below models and optimize for parameters using a grid search. Test and training splits were built accounting for the class imbalance.
+
+1. K Nearest Neighbors
+2. Logistic Regression
+3. Support Vector Machines
+4. Random Forest
+5. ADA Boost
+6. Gaussian Naive Bayes
 
 ### Results
+
+## Appendix
+
+<img src="images/Feature Distribution Across Genre.png"/>
