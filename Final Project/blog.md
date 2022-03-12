@@ -32,6 +32,21 @@ There is a large class imbalance that will have to be accounted for when buildin
 
 ### Musical Features
 
+There are 15 features in the dataset. A description from [Spotify](https://developer.spotify.com/discover/) of each feature is described below.
+
+
+| Feature      | Description | Feature      | Description |
+| ----------- | ----------- | ----------- | ----------- |
+| Artist Name      |  name of the artist| Track Name|name of the song|
+| Popularity      | how popular the song is|how well a song is suited for dancingDanceability||
+| Energy      |a measure of intensity and activity in the song|Key|the musical key the song is in|
+| Loudness      | the average decibels of the song|Speechiness|the presence of spoken word in the song|
+| Acousticness      | how acoustic the song is|Instrumentalness|how much of the song consists of instrumentals|
+| Liveness   | the probability of a song being recorded with a live audience| Valence |the amount of positivity in the song|
+| Tempo |the speed of the song| Duration_in min/ms|the length of the song|
+| Time_signature|the time signature of the song based on quarter notes | | |
+
+
 ## Classification
 
 ### Results
