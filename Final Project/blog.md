@@ -8,7 +8,7 @@ Because of the difficulty of human classification, I look into using machine lea
 
 ## Data
 
-I downloaded a music dataset from (Kaggle)[https://www.kaggle.com/purumalgi/music-genre-classification]. This data includes 17,997 songs that are categorized into 1 of 11 genres. Each song has the metadata provided as well as musical features. 
+I downloaded a music dataset from [Kaggle](https://www.kaggle.com/purumalgi/music-genre-classification). This data includes 17,997 songs that are categorized into 1 of 11 genres. Each song has the metadata provided as well as musical features. 
 
 ### Genres
 
