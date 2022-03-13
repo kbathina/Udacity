@@ -111,7 +111,7 @@ I look at the F1 score to to see how well the genres were classified. Because of
 
 For the Capstone project, I chose to build a classifier for a genre problem found on Kaggle. I first downloaded and cleaned the data. I then explored the features and cleaned up any irregularities. Finally, I trained a variety of models and then calculated the accuracy and F1 score. One way to improve these models is to build a voting ensemble. In this model, I can train many models and then predict the genre with the most votes. 
 
-There were some aspects of this project that were very interesting. One, I believe there is a bias in the dataset due to my exploratory analysis of the features. The models I build are trained to this biased dataset. When building models for real world use, I will start considering how valid the collected data is and how to work around the biases when building the model. Another interesting aspect was with the model selection. In most cases, it makes most sense to limit the number of models before training. In cases with small datasets, it can make more sense to test everything.
+There were some aspects of this project that were very interesting. One, even though I believe there is a bias in the dataset due to my exploratory analysis, I still built the models with this biased data. In real world use, I will start considering how valid the collected data is and how to work around the biases when building the model. Another interesting aspect was with the model selection. In most cases, it makes most sense to limit the number of models before training. In cases with small datasets, it can make more sense to test everything.
 
 ## Appendix
 
