@@ -44,9 +44,8 @@ There are 15 features in the dataset. A description from [Spotify](https://devel
 | Acousticness      | how acoustic the song is|Instrumentalness|how much of the song consists of instrumentals|
 | Liveness   | the probability of a song being recorded with a live audience| Valence |the amount of positivity in the song|
 | Tempo |the speed of the song| Duration_in min/ms|the length of the song|
-| Time_signature|the time signature of the song based on quarter notes | | |
-
-In order to have consistent data types, I limit features to those that are continuous Basic statistics of the remaining features are shown below. 
+| Time_signature|the time signature of the song based on quarter notes | | |fff
+In order to have consistent data types, I limit features to those that are continuous. Basic statistics of the remaining features are shown below. 
 
 || Popularity      | Danceability | Energy      | Loudness | Speechiness      | Acousticeness | Instrumentalness      | Liveness | Valence      | Tempo | Duration_in min/ms      |
 | ----------- | ----------- | ----------- | ----------- |----------- | ----------- | ----------- | ----------- |----------- | ----------- | ----------- | ----------- |
@@ -100,13 +99,19 @@ I consider the below models and optimize for parameters using a grid search. Tes
 
 ### Results
 
-I plotted the validation accuracy across 10 independent runs of each type of classifier.ADA and GNB had the lowest performance at around 37%. KNN and LogReg had about 43% accuracy while SVC and RandForest were the best performrs at 46%. There is about a 9% chance to randomly guess the correct genre.
+I plotted the validation accuracy across 10 independent runs of each type of classifier. ADA and GNB had the lowest performance at around 37%. KNN and LogReg had about 43% accuracy while SVC and RandForest were the best performrs at 46%. There is about a 9% chance to randomly guess the correct genre.
 
 <img src="images/results.png" width="500" height="300" />
 
 I look at the F1 score to to see how well the genres were classified. Because of the many classes, the total score represents a weighted average. In all classifiers, the instrumental genre had the highest F1 score and thus the best precision and recall.
 
 <img src="images/f1.png" width="500" height="300" />
+
+## Conclusion
+
+For the Capstone project, I chose to build a classifier for a genre problem found on Kaggle. I first downloaded and cleaned the data. I then explored the features and cleaned up any irregularities. Finally, I trained a variety of models and then calculated the accuracy and F1 score. One way to improve these models is to build a voting ensemble. In this model, I can train many models and then predict the genre with the most votes. 
+
+There were some aspects of this project that were very interesting. One, I believe there is a bias in the dataset due to my exploratory analysis of the features. The models I build are trained to this biased dataset. When building models for real world use, I will start considering how valid the collected data is and how to work around the biases when building the model. Another interesting aspect was with the model selection. In most cases, it makes most sense to limit the number of models before training. In cases with small datasets, it can make more sense to test everything.
 
 ## Appendix
 
