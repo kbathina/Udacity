@@ -91,14 +91,22 @@ My strategy to build a good classifier was to try many different algorithms and 
 
 I consider the below models and optimize for parameters using a grid search. Test and training splits were built accounting for the class imbalance.
 
-1. K Nearest Neighbors
-2. Logistic Regression
-3. Support Vector Machines
-4. Random Forest
-5. ADA Boost
-6. Gaussian Naive Bayes
+1. K Nearest Neighbors (KNN)
+2. Logistic Regression (LogReg)
+3. Support Vector Machines (SVC)
+4. Random Forest (RandForest)
+5. ADA Boost (ADA)
+6. Gaussian Naive Bayes (GNB)
 
 ### Results
+
+I plotted the validation accuracy across 10 independent runs of each type of classifier.ADA and GNB had the lowest performance at around 37%. KNN and LogReg had about 43% accuracy while SVC and RandForest were the best performrs at 46%. There is about a 9% chance to randomly guess the correct genre.
+
+<img src="images/results.png" width="500" height="300" />
+
+I look at the F1 score to to see how well the genres were classified. Because of the many classes, the total score represents a weighted average. In all classifiers, the instrumental genre had the highest F1 score and thus the best precision and recall.
+
+<img src="images/f1.png" width="500" height="300" />
 
 ## Appendix
 
