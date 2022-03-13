@@ -1,13 +1,13 @@
 The following libraries were used in this analysis:
 
-matplotlib
-numpy
-re
-pandas
-string
-math
-collections
-sklearn
+* matplotlib
+* numpy
+* re
+* pandas
+* string
+* math
+* collections
+* sklearn
 
 The files in the repository include two `.csv` data files from [Kaggle](https://www.kaggle.com/purumalgi/music-genre-classification), a jupyter notebook, as well as the blog.
 
