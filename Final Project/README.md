@@ -9,9 +9,9 @@ The following libraries were used in this analysis:
 * collections
 * sklearn
 
-The files in the repository include two `.csv` data files from [Kaggle](https://www.kaggle.com/purumalgi/music-genre-classification), a jupyter notebook, as well as the blog.
+The files in the repository include two `.csv` data files from [Kaggle](https://www.kaggle.com/purumalgi/music-genre-classification), a jupyter notebook, as well as the blog. The up-to-date branch is `master` **not** `main`.
 
-The motivation for doing this project is to study patterns in various music genres. My main results are summarized below:
+The motivation for doing this project is to study patterns in various music genres. More simply, I really like music so I chose this dataset. My main results are summarized below:
 
 1. The support-vector machine model and the random forest model both performed best in genre classification. 
 2. Energy and Acousticeness were two of the most important features. 
